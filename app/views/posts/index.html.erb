@@ -1,12 +1,24 @@
-<h1>Top page</h1>
-<%= link_to '新規投稿', '/posts/new' %>
-<% @posts.each do |post| %>
-  <div class="post">
+<div class="contents row">
+  <% @posts.each do |post| %>
+    <div class="content_post" style="background-image: url(<%= post.image %>);">
+      <div class="more">
+        <span><%= image_tag 'arrow_top.png' %></span>
+        <ul class="more_list">
+          <li>
+            <%= link_to '詳細', post_path(post.id), method: :get %>
+          </li>
+          <li>
+            <%= link_to '削除', post_path(post.id), method: :delete %>
+          </li>
+        </ul>
+      </div>
     <div class="post-date">
-      投稿日時：<%= post.created_at %>
+        投稿日時：<%= post.created_at %>
     </div>
-    <div class="post-content">
-      <%= post.content %>
+        <p><%= post.title %></p>
+        <%= post.text %>
+        <span class="name">
+        </span>
     </div>
-  </div>
-<% end %>
+  <% end %>
+</div>
