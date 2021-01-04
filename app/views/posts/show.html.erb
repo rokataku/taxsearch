@@ -22,7 +22,7 @@
   <div class="container">
     <% if user_signed_in? %>
       <%= form_with(model: [@post, @comment], local: true) do |form| %>
-        <%= form.text_area :content, placeholder: "コメント記載", rows: "2" %>
+        <%= form.text_area :content, placeholder: "コメントする", rows: "2" %>
         <%= form.submit "SEND" %>
       <% end %>
     <% else %>
