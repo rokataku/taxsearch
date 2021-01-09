@@ -1,5 +1,5 @@
 <div class="contents row">
-  <div class="content_post" style="background-image: url(<%= @post.image %>);">
+  <div class="content_post" style="background-image: url(<%= @post.url %>);">
     <div class="more">
       <span><%= image_tag 'arrow_top.png' %></span>
       <ul class="more_list">
@@ -19,6 +19,8 @@
         <span class="name">
         </span>
   </div>
+  <%= image_tag @post.image.variant(resize: '660x400'), class: 'message-image' if @post.image.attached? %>
+
   <div class="container">
     <% if user_signed_in? %>
       <%= form_with(model: [@post, @comment], local: true, id: "form") do |form| %>

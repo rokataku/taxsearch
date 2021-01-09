@@ -11,7 +11,7 @@ class PostsController < ApplicationController
   end
 
   def create
-    Post.create(post_params)
+    Post.create!(post_params)
   end
 
   def destroy
@@ -30,7 +30,7 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:title, :text, :image)
+    params.require(:post).permit(:title, :url, :text, :image).merge(user_id: current_user.id)
   end
 
   def set_post

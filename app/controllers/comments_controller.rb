@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
   def create
-    comment = Comment.create(comment_params)
+    comment = Comment.create!(comment_params)
     redirect_to "/posts/#{comment.post.id}"
   end
 
@@ -20,6 +20,6 @@ class CommentsController < ApplicationController
 
   private
   def comment_params
-    params.permit(:id, :content).merge(user_id: current_user.id, post_id: params[:post_id])
+    params.require(:comment).permit(:id, :content).merge(user_id: current_user.id, post_id: params[:post_id])
   end
 end
