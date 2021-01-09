@@ -1057,3 +1057,7 @@ footer p {
 .search-form .search-btn {
   width: 10%;
 }
+
+div[data-check="true"] {
+  background: #585555;
+}
