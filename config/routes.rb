@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   root to: 'posts#index'
   resources :posts do
     resources :comments, only: :create
+    get 'comments/:id', to: 'comments#checked'
   end
   resources :users, only: :show
 end

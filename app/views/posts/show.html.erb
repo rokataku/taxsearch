@@ -21,20 +21,29 @@
   </div>
   <div class="container">
     <% if user_signed_in? %>
-      <%= form_with(model: [@post, @comment], local: true) do |form| %>
-        <%= form.text_area :content, placeholder: "コメントする", rows: "2" %>
-        <%= form.submit "SEND" %>
+      <%= form_with(model: [@post, @comment], local: true, id: "form") do |form| %>
+        <%= form.text_area :content, placeholder: "コメントする", rows: "2", id: "content" %>
+        <%= form.submit "SEND" , id: "submit" %>
       <% end %>
     <% else %>
       <strong><p>※※※ コメントの投稿には新規登録/ログインが必要です ※※※</p></strong>
     <% end %>
+
+    <div id="list">
+    </div>
+
     <div class="comments">
       <h4>＜コメント一覧＞</h4>
       <% @comments.each do |comment| %>
-        <p>
-          <strong><%= link_to comment.user.name, "/users/#{comment.user_id}" %>：</strong>
-          <%= comment.content %>
-        </p>
+        <div class="comment" data-id=<%= comment.id %> data-check=<%= comment.checked %>>
+          <p>
+            <strong><%= link_to comment.user.name, "/users/#{comment.user_id}" %>：</strong>
+            <%= comment.content %>
+            <div class="post-date">
+              投稿日時：<%= comment.created_at %>
+            </div>
+          </p>
+        </div>
       <% end %>
     </div>
   </div>
