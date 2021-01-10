@@ -1,0 +1,7 @@
+<%= form_with(model: post, local: true) do |form| %>
+  <%= form.text_field :title, placeholder: "論点" %>
+  <%= form.file_field :image, placeholder: "画像" %>
+  <%= form.text_field :url, placeholder: "参考URL" %>
+  <%= form.text_area :text, placeholder: "説明", rows: "10" %>
+  <%= form.submit "SEND" %>
+<% end %>

@@ -6,6 +6,14 @@ class Post < ApplicationRecord
 
   validates :url, presence: true, unless: :was_attached?
 
+  def self.search(search)
+    if search != ""
+      Post.where('text LIKE(?)', "%#{search}%")
+    else
+      Post.all
+    end
+  end
+
   def was_attached?
     self.image.attached?
   end
