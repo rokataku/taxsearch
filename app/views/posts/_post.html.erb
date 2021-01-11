@@ -20,4 +20,11 @@
     <%= post.text %>
     <span class="name">
     </span>
+  <ul class="tag">
+    <li class="tag-list">
+      <%post.tags.each do |tag| %>
+        #<%=tag.name%>
+      <%end%>
+    </li>
+  </ul>
 </div>

@@ -7,15 +7,21 @@ class PostsController < ApplicationController
   end
 
   def new
-    @post = Post.new
+    @post = PostsTag.new
   end
 
   def create
-    Post.create!(post_params)
+    @post = PostsTag.new(post_params)
+    if @post.valid?
+      @post.save
+      return redirect_to root_path
+    else
+      render "new"
+    end
   end
 
   def destroy
-    post = Post.find(params[:id])
+    post = PostsTag.find(params[:id])
     post.destroy
   end
 
@@ -23,7 +29,7 @@ class PostsController < ApplicationController
   end
 
   def update
-    post = Post.find(params[:id])
+    post = PostsTag.find(params[:id])
     post.update(post_params)
   end
 
@@ -36,10 +42,16 @@ class PostsController < ApplicationController
     @posts = Post.search(params[:keyword]).order(id: "DESC")
   end
 
+  def incremental_search
+    return nil if params[:keyword] == ""
+    tag = Tag.where(['name LIKE ?', "%#{params[:keyword]}%"] )
+    render json:{ keyword: tag }
+  end
+
   private
 
   def post_params
-    params.require(:post).permit(:title, :url, :text, :image).merge(user_id: current_user.id)
+    params.require(:posts_tag).permit(:title, :url, :text, :image, :name).merge(user_id: current_user.id)
   end
 
   def set_post

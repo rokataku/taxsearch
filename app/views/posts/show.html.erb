@@ -24,7 +24,7 @@
   <div class="container">
     <% if user_signed_in? %>
       <%= form_with(model: [@post, @comment], local: true, id: "form") do |form| %>
-        <%= form.text_area :content, placeholder: "コメントする", rows: "2", id: "content" %>
+        <%= form.text_area :content, placeholder: "コメントする", rows: "2", id: "comment" %>
         <div id="char_num">
         0文字
         </div>
