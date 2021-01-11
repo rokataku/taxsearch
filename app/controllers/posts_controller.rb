@@ -3,7 +3,7 @@ class PostsController < ApplicationController
   before_action :move_to_index, except: [:index, :show, :search]
 
   def index
-    @posts = Post.all.order(id: "DESC")
+    @posts = Post.includes(:user).order(id: "DESC")
   end
 
   def new

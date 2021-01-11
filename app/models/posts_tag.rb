@@ -8,7 +8,7 @@ class PostsTag
   end
 
   def save
-    post = Post.create(title: title, url: url, text: text, image: image)
+    post = Post.create(title: title, url: url, text: text, image: image, user_id: user_id)
     tag = Tag.where(name: name).first_or_initialize
     tag.save
 
