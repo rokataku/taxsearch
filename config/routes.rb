@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     resources :comments, only: :create
     collection do
       get 'search'
+      get 'incremental_search'
     end
     get 'comments/:id', to: 'comments#checked'
   end
