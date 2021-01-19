@@ -1,0 +1,14 @@
+<div class="contents row">
+  <div class="container">
+    <strong>Sign up</strong>
+    <div class="field">
+      <%= link_to "メールアドレスで登録", new_user_registration_path %>
+    </div>
+    <div class="field">
+      <%= link_to 'Facebookで登録', user_facebook_omniauth_authorize_path, method: :post%>
+    </div>
+    <div class="field">
+      <%= link_to 'Googleで登録', user_google_oauth2_omniauth_authorize_path, method: :post%>
+    </div>
+  </div>
+</div>

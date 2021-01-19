@@ -1,6 +1,10 @@
 <div class="contents row">
   <div class="container">
     <h2>Log in</h2>
+      <div class="field">
+        <%= link_to 'Facebookでログイン', user_facebook_omniauth_authorize_path, method: :post%>
+        <%= link_to 'Googleでログイン', user_google_oauth2_omniauth_authorize_path, method: :post%>
+      </div>
     <%= form_with model: @user, url: user_session_path, id: 'new_user', class: 'new_user', local: true do |f| %>
       <div class="field">
         <%= f.label :email %><br />
