@@ -13,13 +13,28 @@
         </ul>
       </div>
     <% end %>
-    <div class="post-date">
-        投稿日時：<%= @post.created_at %>
-    </div>
-        <p><%= @post.title %></p>
-        <%= @post.text %>
-        <span class="name">
-        </span>
+
+    <p><%= @post.title %></p>
+    <span class="name">
+    <a href="">
+      <span>投稿者</span><%= @post.user.name %>
+    </a>
+    </span>
+    <span class="date">
+    <a>
+      <span>投稿日時：</span><%= @post.created_at %>
+    </a>
+    </span>
+  <ul class="tag">
+    <li class="tag-list">
+      <% @post.tags.each do |tag| %>
+        #<%=tag.name%>
+      <%end%>
+    </li>
+  </ul>
+  <div class="text">
+    <p><%= @post.text %></p>
+  </div>
   </div>
   <%= image_tag @post.image.variant(resize: '660x400'), class: 'message-image' if @post.image.attached? %>
 

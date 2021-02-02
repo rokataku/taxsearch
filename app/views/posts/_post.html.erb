@@ -15,14 +15,16 @@
       <% end %>
     </ul>
   </div>
-<div class="post-date">
-    投稿日時：<%= post.created_at %>
-</div>
     <p><%= post.title %></p>
-    <%= post.text %>
     <span class="name">
     <a href="">
       <span>投稿者</span><%= post.user.name %>
+      <span>ジャンル</span><%= post.genre.name %>
+    </a>
+    </span>
+    <span class="date">
+    <a>
+      <span>投稿日時：</span><%= post.created_at %>
     </a>
     </span>
   <ul class="tag">

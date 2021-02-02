@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: [:edit, :show]
+  before_action :set_post, only: [:edit, :update, :show]
   before_action :move_to_index, except: [:index, :show, :search]
 
   def index
@@ -26,11 +26,17 @@ class PostsController < ApplicationController
   end
 
   def edit
+    @post = PostsTag.new(id: params[:id])
   end
 
   def update
-    post = PostsTag.find(params[:id])
-    post.update(post_params)
+    @post = PostsTag.new(post_params.merge(id: params[:id]))
+    if @post.valid?
+      @post.update
+      redirect_to root_path
+    else
+      render :edit
+    end
   end
 
   def show
@@ -51,7 +57,7 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:posts_tag).permit(:title, :url, :text, :image, :name).merge(user_id: current_user.id)
+    params.require(:posts_tag).permit(:title, :url, :text, :genre_id, :image, :name).merge(user_id: current_user.id)
   end
 
   def set_post

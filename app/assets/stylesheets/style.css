@@ -842,7 +842,18 @@ header.header .user_nav ul li a {
   right: 0;
 }
 
+div.contents.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
 div.contents.row h2 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
   margin: 20px 0;
   padding: 0;
   font-weight: normal;
@@ -859,10 +870,11 @@ div.contents.row .new_user {
 }
 
 div.contents.row div.content_post {
+  width: calc((100% - 30px) / 2);
   margin: 20px 0;
   padding: 30px;
   position: relative;
-  height: 400px;
+  height: 200px;
   color: #fff;
   background-size: cover;
   background-position: center center;
@@ -936,6 +948,30 @@ div.contents.row div.content_post .more ul.more_list li a:hover {
 }
 
 div.contents.row div.content_post p {
+  
+  left: 30px;
+  right: 100px;
+  top: 30px;
+  margin: 0;
+  font-size: 20px;
+  z-index: 2;
+  font-weight: bold;
+  text-shadow: 0 0 2px #000, 0 0 1px #000, 0 0 1px #000;
+}
+
+div.contents.row div.text p {
+  
+  left: 30px;
+  right: 100px;
+  top: 30px;
+  margin: 0;
+  font-size: 15px;
+  z-index: 1;
+  font-weight: light;
+  text-shadow: 0 0 1px #000, 0 0 1px #000, 0 0 1px #000;
+}
+
+ul.tag {
   position: absolute;
   left: 30px;
   right: 100px;
@@ -950,9 +986,18 @@ div.contents.row div.content_post p {
 div.contents.row div.content_post span.name {
   position: absolute;
   right: 30px;
+  bottom: 50px;
+  z-index: 2;
+  font-size: 13px;
+}
+
+div.contents.row div.content_post span.date {
+  position: absolute;
+  right: 30px;
   bottom: 30px;
   z-index: 2;
   font-size: 13px;
+  color: #84d3ef;
 }
 
 div.contents.row div.content_post span.name a {
@@ -1060,4 +1105,41 @@ footer p {
 
 div[data-check="true"] {
   background: #585555;
+}
+
+/* タブレット表示時 */
+@media (max-width: 524px) {
+  .search-form {
+    width: 90%;
+    margin: 0 auto;
+  }
+  .contents.row {
+    font-size: 24px;
+    width: 48%;
+    margin-bottom: 40px;
+  }
+  .content_post p {
+    font-size: 20px;
+  }
+  .card__summary {
+    font-size: 16px;
+  }
+ }
+ @media (max-width: 599px) {
+  .search-form {
+    width: 90%;
+    margin: 0 auto;
+  }
+  .contents.row {
+    font-size: 24px;
+    width: 48%;
+    margin-bottom: 40px;
+  }
+  .content_post p {
+    font-size: 20px;
+  }
+  .card__summary {
+    font-size: 16px;
+  }
+ }
 }

@@ -1,8 +1,23 @@
-<%= form_with model: post, url: posts_path, local: true do |form| %>
+<%= form_with(model: @post, url: posts_path, local: true) do |form| %>
   <%= form.text_field :title, placeholder: "論点" %>
   <%= form.file_field :image, placeholder: "画像" %>
+
+    <!--
+    <video id="video_area" style="background-color: #000" autoplay></video>
+
+    <!-- 押下するとカメラ映像描画を開始します。
+    <button id="start_btn">映像表示開始</button>
+
+    <!-- 押下するとカメラ映像から静止画をキャプチャします。
+    <button onclick="copyFrame()">静止画取得</button>
+
+    <!-- キャプチャした静止画が描画されます。
+    <canvas id="capture_image"></canvas>-->
+
+
   <%= form.text_field :url, placeholder: "参考URL" %>
   <%= form.text_area :text, placeholder: "メモ", rows: "10" %>
+  <%= form.collection_select(:genre_id, Genre.all, :id, :name, {}, {class:"genre-select"}) %>
     <div class="tag-field", id='tag-field'>
       <%= form.text_field :name, placeholder: "タグ", class:"input-tag" %>
     </div>
@@ -10,3 +25,5 @@
     </div>
   <%= form.submit "SEND" %>
 <% end %>
+
+
