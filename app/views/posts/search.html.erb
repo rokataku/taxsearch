@@ -2,6 +2,13 @@
   <%= form.text_field :keyword, placeholder: "論点検索", class: "search-input" %>
   <%= form.submit "検索", class: "search-btn" %>
 <% end %>
+<%= search_form_for @p, url: genre_search_posts_path do |f| %>
+  <%= f.label :title_eq, '検索項目' %>
+  <%= f.collection_select :title_eq, @post_title, :title, :title,  include_blank: '指定なし' %>
+  <br>
+  <%= f.submit '検索' %>
+<% end %>
+
 <div class="contents row">
   <% @posts.each do |post| %>
     <%= render partial: "post", locals: { post: post } %>

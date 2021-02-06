@@ -1,9 +1,13 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:edit, :update, :show]
   before_action :move_to_index, except: [:index, :show, :search]
+  before_action :search_post, only: [:index, :genre_search]
+
+  
 
   def index
     @posts = Post.includes(:user).order(id: "DESC")
+    set_post_column
   end
 
   def new
@@ -54,6 +58,12 @@ class PostsController < ApplicationController
     render json:{ keyword: tag }
   end
 
+  def genre_search
+    @results = @p.result
+    genre_id = params[:q][:genre_id_eq]
+    @genre = Genre.find_by(id: genre_id)
+  end
+
   private
 
   def post_params
@@ -69,4 +79,13 @@ class PostsController < ApplicationController
       redirect_to action: :index
     end
   end
+
+  def search_post
+    @p = Post.ransack(params[:q])
+  end
+
+  def set_post_column
+    @post_title = Post.select("title").distinct  # 重複なくtitleカラムのデータを取り出す
+  end
+
 end

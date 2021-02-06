@@ -3,6 +3,13 @@
   <%= form.submit "検索", class: "search-btn" %>
 <% end %>
 
+
+<%= search_form_for @p, url: genre_search_posts_path do |f| %>
+  <%= f.collection_select :title_eq, @post_title, :title, :title,  include_blank: 'タイトル検索' %>
+  <%= f.collection_select :genre_id_eq, Genre.where.not(id: 0), :id, :name, include_blank: 'カテゴリー検索' %>
+  <%= f.submit '検索', class: "search-btn" %>
+<% end %>
+
 <div class="contents row">
   <% @posts.each do |post| %>
     <%= render partial: "post", locals: { post: post } %>

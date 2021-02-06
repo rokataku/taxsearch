@@ -1,0 +1,12 @@
+<div class="contents row">
+  <% if @results.length != 0 %>
+    <% @results.each do |result| %>
+      <%= render partial: "post", locals: { post: result } %>
+    <% end %>
+
+  <% else %>
+    該当する投稿はありません
+  <% end %>
+  <br>
+</div>
+<%= link_to 'トップページへ戻る', root_path %>

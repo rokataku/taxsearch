@@ -1094,7 +1094,17 @@ footer p {
   padding-top: 32px;
 }
 
+.post_search {
+  text-align: center;
+  padding-top: 32px;
+}
+
 .search-form .search-input {
+  width: 30%;
+  margin-right: 10px;
+}
+
+.post_search .search-input {
   width: 30%;
   margin-right: 10px;
 }
