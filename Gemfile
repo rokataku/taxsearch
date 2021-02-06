@@ -68,8 +68,6 @@ gem 'devise'
 gem 'mini_magick'
 gem 'image_processing', '~> 1.2'
 gem 'aws-sdk-s3', require: false
-gem 'omniauth-facebook'
-gem 'omniauth-google-oauth2'
-gem "omniauth-rails_csrf_protection"
-
-gem 'omniauth', '1.9.1'
+gem 'paperclip'
+gem 'active_hash'
+gem 'ransack'

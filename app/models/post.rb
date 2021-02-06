@@ -1,12 +1,17 @@
 class Post < ApplicationRecord
-  validates :text, presence: true
+  extend ActiveHash::Associations::ActiveRecordExtensions
+  belongs_to_active_hash :genre
   belongs_to :user, optional: true
+
   has_many :comments
   has_many :post_tag_relations
   has_many :tags, through: :post_tag_relations
+  
   has_one_attached :image
 
+  validates :text, presence: true
   validates :url, presence: true, unless: :was_attached?
+  validates :genre_id, numericality: { other_than: 1 } 
 
   def self.search(search)
     if search != ""

@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     collection do
       get 'search'
       get 'incremental_search'
+      get 'genre_search'
     end
     get 'comments/:id', to: 'comments#checked'
   end
