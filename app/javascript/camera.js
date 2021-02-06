@@ -1,47 +1,30 @@
-window.onload = () => {
-  const video  = document.querySelector("#camera");
-  const canvas = document.querySelector("#picture");
-  const se     = document.querySelector('#se');
+ // getUserMedia が使えないときは、『getUserMedia()が利用できないブラウザです！』と言ってね。
+ if (typeof navigator.mediaDevices.getUserMedia !== 'function') {
+  const err = new Error('getUserMedia()が利用できないブラウザです！');
+  alert(`${err.name} ${err.message}`);
+  throw err;
+}
 
-  /** カメラ設定 */
-  const constraints = {
-    audio: false,
-    video: {
-      width: 300,
-      height: 200,
-      facingMode: "user"   // フロントカメラを利用する
-      // facingMode: { exact: "environment" }  // リアカメラを利用する場合
-    }
-  };
+// 操作する画面エレメント変数定義します。
+const $start = document.getElementById('start_btn');   // スタートボタン
+const $video = document.getElementById('video_area');  // 映像表示エリア
 
-  /**
-   * カメラを<video>と同期
-   */
-  navigator.mediaDevices.getUserMedia(constraints)
-  .then( (stream) => {
-    video.srcObject = stream;
-    video.onloadedmetadata = (e) => {
-      video.play();
-    };
-  })
-  .catch( (err) => {
-    console.log(err.name + ": " + err.message);
-  });
+// 「スタートボタン」を押下したら、getUserMedia を使って映像を「映像表示エリア」に表示してね。
+$start.addEventListener('click', () => {
+  navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+  .then(stream => $video.srcObject = stream)
+  .catch(err => alert(`${err.name} ${err.message}`));
+}, false);
 
-  /**
-   * シャッターボタン
-   */
-   document.querySelector("#shutter").addEventListener("click", () => {
-    const ctx = canvas.getContext("2d");
 
-    // 演出的な目的で一度映像を止めてSEを再生する
-    video.pause();  // 映像を停止
-    se.play();      // シャッター音
-    setTimeout( () => {
-      video.play();    // 0.5秒後にカメラ再開
-    }, 500);
+// 「静止画取得」ボタンが押されたら「<canvas id="capture_image">」に映像のコマ画像を表示します。
+function copyFrame() {
 
-    // canvasに画像を貼り付ける
-    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-  });
-};
+  var canvas_capture_image = document.getElementById('capture_image');
+  var cci = canvas_capture_image.getContext('2d');
+  var va = document.getElementById('video_area');
+
+  canvas_capture_image.width  = va.videoWidth;
+  canvas_capture_image.height = va.videoHeight;
+  cci.drawImage(va, 0, 0);  // canvasに『「静止画取得」ボタン』押下時点の画像を描画。
+}
