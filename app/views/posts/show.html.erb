@@ -36,6 +36,9 @@
     <p><%= @post.text %></p>
   </div>
   </div>
+  <div>
+    <%= render partial: 'likes', locals: { post: @post } %>
+  </div>
   <%= image_tag @post.image.variant(resize: '660x400'), class: 'message-image' if @post.image.attached? %>
 
   <div class="container">

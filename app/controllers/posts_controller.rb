@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: [:edit, :update, :show]
+  before_action :set_post, only: [:edit, :update, :show, :good, :ungood]
   before_action :move_to_index, except: [:index, :show, :search]
   before_action :search_post, only: [:index, :genre_search]
 
@@ -46,6 +46,7 @@ class PostsController < ApplicationController
   def show
     @comment = Comment.new
     @comments = @post.comments.includes(:user).order(id: "DESC")
+    @likes = @post.likes.includes(:user_id).order(id: "DESC")
   end
 
   def search
@@ -62,6 +63,18 @@ class PostsController < ApplicationController
     @results = @p.result
     genre_id = params[:q][:genre_id_eq]
     @genre = Genre.find_by(id: genre_id)
+  end
+
+  # いいね
+  def good
+    current_user.liked_posts << @post
+    redirect_to post_path
+  end
+
+  # いいね削除
+  def ungood
+    current_user.liked_posts.destroy(@post)
+    redirect_to post_path
   end
 
   private

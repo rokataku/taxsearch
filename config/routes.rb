@@ -12,6 +12,8 @@ Rails.application.routes.draw do
       get 'genre_search'
     end
     get 'comments/:id', to: 'comments#checked'
+    patch "good", "ungood", on: :member
+    get "liked", on: :collection
   end
   resources :users, only: [:new, :show]
 end

@@ -1,0 +1,10 @@
+<div>
+  <% if current_user && current_user.likable_for?(post) %>
+    <%= link_to "いいね", good_post_path(post), method: :patch %>
+  <% elsif current_user && current_user.deletable_for?(post) %>
+    <%= link_to "いいねを解除", ungood_post_path(post), method: :patch %>
+  <% end %>
+</div>
+<div>
+  <%= post.likes.count %><span>人が「いいね」しました</span>
+</div>
