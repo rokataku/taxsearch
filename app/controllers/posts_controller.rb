@@ -16,31 +16,36 @@ class PostsController < ApplicationController
 
   def create
     @post = PostsTag.new(post_params)
+
     if @post.valid?
       @post.save
       return redirect_to root_path
     else
-      render "new"
+      render :new
+    end
+  end
+
+  def edit
+    load_post
+
+    @post = PostsTag.new(post: @post)
+  end
+
+  def update
+    load_post
+
+    @post = PostsTag.new(post_params, post: @post)
+
+    if @post.save
+      redirect_to @post, notice: 'The post has been updated.'
+    else
+      render :edit
     end
   end
 
   def destroy
     post = PostsTag.find(params[:id])
     post.destroy
-  end
-
-  def edit
-    @post = PostsTag.new(id: params[:id])
-  end
-
-  def update
-    @post = PostsTag.new(post_params.merge(id: params[:id]))
-    if @post.valid?
-      @post.update
-      redirect_to root_path
-    else
-      render :edit
-    end
   end
 
   def show
@@ -80,7 +85,11 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:posts_tag).permit(:title, :url, :text, :genre_id, :image, :name).merge(user_id: current_user.id)
+    params.require(:post).permit(:title, :url, :text, :genre_id, :image, :tag_names).merge(user_id: current_user.id)
+  end
+
+  def load_post
+    @post = current_user.posts.find(params[:id])
   end
 
   def set_post

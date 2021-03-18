@@ -1,51 +1,54 @@
 class PostsTag
-
   include ActiveModel::Model
-  attr_accessor :title, :url, :text, :genre_id, :name, :image, :user_id
+
+  attr_accessor :title, :url, :text, :genre_id, :name, :image, :user_id, :tag_names
 
   with_options presence: true do
     validates :title
-    validates :name
-  end
+    validates :split_tag_names
 
-  def initialize(attribute = {})
-    if !(attribute[:id] == nil)
-      @post = Post.find(attribute[:id])
-      @tag = PostTagRelation.find(attribute[:tag_id])
-      if !(self.title = attribute[:title])
-        self.title = @post.title
-      else
-        self.title = attribute[:title]
-      end
-      if !(self.name = attribute[:name])
-        self.name = @tag.name 
-      else
-        self.name = attribute[:name]
-      end
-    else
-      super(attribute)
-    end
   end
+  
+  delegate :persisted?, to: :post
 
-  def persisted?
-    if @post.nil? 
-      return false 
-    else
-       return @post.persisted?
-    end
+  def initialize(attributes = nil, post: Post.new)
+    @post = post
+    attributes ||= default_attributes
+    super(attributes)
   end
 
   def save
-    post = Post.create(title: title, url: url, text: text, genre_id: genre_id, image: image, user_id: user_id)
-    tag = Tag.where(name: name).first_or_initialize
-    tag.save
+    return if invalid?
 
-    PostTagRelation.create(post_id: post.id, tag_id: tag.id)
+    ActiveRecord::Base.transaction do
+      tags = split_tag_names.map {|name| Tag.find_or_create_by!(name: name) }
+      post.update(title: title, url: url, text: text, genre_id: genre_id, image: image, user_id: user_id)
+    end
+  rescue ActiveRecord::RecordInvalid
+    false
   end
 
-  def update
-    @post.update(title: title, url: url, text: text, genre_id: genre_id, image: image, user_id: user_id)
-    @tag.update(name: name).first_or_initialize
+  def to_model
+    post
   end
 
+  private
+
+  attr_reader :post
+
+  def default_attributes
+    {
+      title: post.title,
+      url: post.url,
+      text: post.text,
+      genre_id: post.genre_id,
+      image: post.image,
+      user_id: post.user_id,
+      tag_names: post.tags.pluck(:name).join(',')
+    }
+  end
+
+  def split_tag_names
+    tag_names.split(',')
+  end
 end
